@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Login | Task Manager{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="brand-icon">✓</div>
+        <h1>Task Manager</h1>
+        <p class="muted">Manage your tasks in one place.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="you@example.com" required>
+
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter password" required>
+
+            <button class="primary-btn full" type="submit">Login</button>
+        </form>
+
+        <p class="switch-text">
+            Don't have an account?
+            <a href="{{ url_for('register') }}">Create one</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

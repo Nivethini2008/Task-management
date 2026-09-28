@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | Task Manager{% endblock %}
+
+{% block content %}
+<header class="topbar">
+    <div>
+        <h2>Task Manager</h2>
+        <span class="online-dot">● Live updates enabled</span>
+    </div>
+    <div class="user-menu">
+        <span>Hello, {{ user_name }}</span>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <div>
+            <h1>My Tasks</h1>
+            <p>Track, update and complete your work.</p>
+        </div>
+        <button class="primary-btn" onclick="openCreateModal()">+ Add Task</button>
+    </section>
+
+    <section class="stats">
+        <div class="stat-card">
+            <span>Total</span>
+            <strong id="total-count">0</strong>
+        </div>
+        <div class="stat-card">
+            <span>Pending</span>
+            <strong id="pending-count">0</strong>
+        </div>
+        <div class="stat-card">
+            <span>In Progress</span>
+            <strong id="progress-count">0</strong>
+        </div>
+        <div class="stat-card">
+            <span>Completed</span>
+            <strong id="completed-count">0</strong>
+        </div>
+    </section>
+
+    <section class="toolbar">
+        <input id="search-input" type="search" placeholder="Search tasks..." oninput="renderTasks()">
+        <select id="filter-status" onchange="renderTasks()">
+            <option value="All">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+        <select id="filter-priority" onchange="renderTasks()">
+            <option value="All">All Priority</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+    </section>
+
+    <section id="task-list" class="task-grid"></section>
+</main>
+
+<div id="task-modal" class="modal hidden">
+    <div class="modal-card">
+        <button class="close-btn" onclick="closeModal()">×</button>
+        <h2 id="modal-title">Add Task</h2>
+
+        <form id="task-form">
+            <input type="hidden" id="task-id">
+
+            <label>Task Title</label>
+            <input id="task-title" type="text" placeholder="Enter task title" required>
+
+            <label>Description</label>
+            <textarea id="task-description" rows="4" placeholder="Describe the task"></textarea>
+
+            <div class="form-row">
+                <div>
+                    <label>Status</label>
+                    <select id="task-status">
+                        <option>Pending</option>
+                        <option>In Progress</option>
+                        <option>Completed</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Priority</label>
+                    <select id="task-priority">
+                        <option>Low</option>
+                        <option selected>Medium</option>
+                        <option>High</option>
+                    </select>
+                </div>
+            </div>
+
+            <label>Due Date</label>
+            <input id="task-due-date" type="date">
+
+            <button class="primary-btn full" type="submit">Save Task</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
